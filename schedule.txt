@@ -1,0 +1,67 @@
+
+import mysql.connector as msql
+from mysql.connector import Error
+import schedule
+import pandas as pd
+import time
+
+def stock_update():
+    empdata = pd.read_csv(r'Book1.csv', index_col=False, delimiter=',')
+    empdata.head()
+    try:
+        conn = msql.connect(host='localhost', user='root',
+                            password='')  # give ur username, password
+        if conn.is_connected():
+            cursor = conn.cursor()
+            cursor.execute("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'employee';")
+            valid=cursor.fetchall()
+            print("valid",valid)
+            if len(list(valid))==0:
+                cursor.execute("CREATE DATABASE employee")
+                print("Database is created")
+            else:
+                print("Connected to DB employee")
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    try:
+        conn = msql.connect(host='localhost', database='employee', user='root', password='')
+        if conn.is_connected():
+            
+            cursor = conn.cursor()
+
+            cursor.execute("select database();")
+            record = cursor.fetchone()
+            print("You're connected to database: ", record)
+            cursor.execute("SELECT count(*) FROM `employee_data`;")
+            datacount=cursor.fetchall()
+            print("datacount ",datacount)
+            print("datac",empdata.shape[0],datacount[0][0])
+            if empdata.shape[0]==datacount[0][0]:
+                return
+            cursor.execute('DROP TABLE IF EXISTS employee_data;')
+            print('Creating table....')
+            cursor.execute("CREATE TABLE employee_data(no varchar(255),name varchar(255))")
+            print("Table is created....")
+            
+            for i, row in empdata.iterrows():
+                
+                sql = "INSERT INTO employee.employee_data VALUES (%s,%s)"
+                cursor.execute(sql, tuple(row))
+                print("Record inserted")
+                
+                conn.commit()
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    sql = "SELECT * FROM employee.employee_data"
+    cursor.execute(sql)
+    # Fetch all the records
+    result = cursor.fetchall()
+    for i in result:
+        print(i)
+    
+
+schedule.every(1).seconds.do(stock_update)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
