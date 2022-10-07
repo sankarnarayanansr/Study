@@ -1,38 +1,46 @@
-ftp server
+ftp 
+server.py
 
 import ftplib
 HOSTNAME = "" #hostip
 USERNAME = "" #username@hostip
 PASSWORD = "" #password
-ftp_server = ftplib.FTP(HOSTNAME, USERNAME, PASSWORD)
-ftp_server.encoding = "utf-8"
-filename = "File Name"
-with open(filename, "rb") as file:
-    ftp_server.storbinary(f"STOR {filename}", file)
-ftp_server.dir()
-ftp_server.quit()
+def uploadFiles():
+	ftp_server = ftplib.FTP(HOSTNAME, USERNAME, PASSWORD)
+	ftp_server.encoding = "utf-8"
+	filename = "File Name"
+	with open(filename, "rb") as file:
+	    ftp_server.storbinary(f"STOR {filename}", file)
+	ftp_server.dir()
+	ftp_server.quit()
+schedule.every(15).minutes.do(uploadFiles)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
-client
+client.py
 
 
 import ftplib
 HOSTNAME = "" #hostip
 USERNAME = "" #username@hostip
 PASSWORD = "" #password
+def downloadFiles():
+	ftp_server = ftplib.FTP(HOSTNAME, USERNAME, PASSWORD)
+	ftp_server.encoding = "utf-8"
+	filename = "file.txt"
+	with open(filename, "wb") as file:
+		ftp_server.retrbinary(f"RETR {filename}", file.write)
+	ftp_server.dir()
+	file= open(filename, "r")
+	print('File Content:', file.read())
+	ftp_server.quit()
 
-ftp_server = ftplib.FTP(HOSTNAME, USERNAME, PASSWORD)
-ftp_server.encoding = "utf-8"
-filename = "file.txt"
-with open(filename, "wb") as file:
-	ftp_server.retrbinary(f"RETR {filename}", file.write)
-
-ftp_server.dir()
-
-file= open(filename, "r")
-print('File Content:', file.read())
-
-ftp_server.quit()
+schedule.every(15).minutes.do(downloadFiles)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
 
