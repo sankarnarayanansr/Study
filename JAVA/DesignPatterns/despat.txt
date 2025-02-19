@@ -1,0 +1,448 @@
+Creational Patterns
+Singleton Pattern
+Problem: Ensure a class has only one instance and provide a global point of access to it.
+Solution: Create a private constructor and a static method that returns the instance.
+Java Code:
+Java
+
+public class Singleton {
+    private static Singleton instance;
+    private Singleton() {}
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Factory Method Pattern
+Problem: Create objects without specifying the exact class of object that will be created.
+Solution: Define an interface for creating an object, but let subclasses decide which class to instantiate.
+Java Code:
+Java
+
+interface Product {
+    void use();
+}
+class ConcreteProductA implements Product {
+    public void use() { System.out.println("Using Product A"); }
+}
+class ConcreteProductB implements Product {
+    public void use() { System.out.println("Using Product B"); }
+}
+abstract class Creator {
+    public abstract Product factoryMethod();
+}
+class ConcreteCreatorA extends Creator {
+    public Product factoryMethod() { return new ConcreteProductA(); }
+}
+class ConcreteCreatorB extends Creator {
+    public Product factoryMethod() { return new ConcreteProductB(); }
+}
+
+
+
+AI-generated code. Review and use carefully. More info on FAQ.
+Abstract Factory Pattern
+Problem: Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+Solution: Create an abstract class with methods for creating abstract products.
+Java Code:
+Java
+
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+class WinFactory implements GUIFactory {
+    public Button createButton() { return new WinButton(); }
+    public Checkbox createCheckbox() { return new WinCheckbox(); }
+}
+class MacFactory implements GUIFactory {
+    public Button createButton() { return new MacButton(); }
+    public Checkbox createCheckbox() { return new MacCheckbox(); }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Builder Pattern
+Problem: Construct a complex object step by step.
+Solution: Separate the construction of a complex object from its representation.
+Java Code:
+Java
+
+class Product {
+    private String partA;
+    private String partB;
+    public void setPartA(String partA) { this.partA = partA; }
+    public void setPartB(String partB) { this.partB = partB; }
+}
+abstract class Builder {
+    protected Product product = new Product();
+    public abstract void buildPartA();
+    public abstract void buildPartB();
+    public Product getResult() { return product; }
+}
+class ConcreteBuilder extends Builder {
+    public void buildPartA() { product.setPartA("Part A"); }
+    public void buildPartB() { product.setPartB("Part B"); }
+}
+class Director {
+    private Builder builder;
+    public void setBuilder(Builder builder) { this.builder = builder; }
+    public Product construct() {
+        builder.buildPartA();
+        builder.buildPartB();
+        return builder.getResult();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Prototype Pattern
+Problem: Create new objects by copying existing ones.
+Solution: Implement a prototype interface with a clone method.
+Java Code:
+Java
+
+interface Prototype {
+    Prototype clone();
+}
+class ConcretePrototype implements Prototype {
+    private String field;
+    public ConcretePrototype(String field) { this.field = field; }
+    public Prototype clone() { return new ConcretePrototype(field); }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Structural Patterns
+Adapter Pattern
+Problem: Allow incompatible interfaces to work together.
+Solution: Create an adapter class that implements the target interface and translates calls to the adaptee.
+Java Code:
+Java
+
+interface Target {
+    void request();
+}
+class Adaptee {
+    public void specificRequest() { System.out.println("Specific request"); }
+}
+class Adapter implements Target {
+    private Adaptee adaptee;
+    public Adapter(Adaptee adaptee) { this.adaptee = adaptee; }
+    public void request() { adaptee.specificRequest(); }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Bridge Pattern
+Problem: Decouple an abstraction from its implementation so that the two can vary independently.
+Solution: Use composition to bridge the abstraction and implementation.
+Java Code:
+Java
+
+interface Implementor {
+    void operationImpl();
+}
+class ConcreteImplementorA implements Implementor {
+    public void operationImpl() { System.out.println("Implementation A"); }
+}
+class ConcreteImplementorB implements Implementor {
+    public void operationImpl() { System.out.println("Implementation B"); }
+}
+abstract class Abstraction {
+    protected Implementor implementor;
+    public Abstraction(Implementor implementor) { this.implementor = implementor; }
+    public abstract void operation();
+}
+class RefinedAbstraction extends Abstraction {
+    public RefinedAbstraction(Implementor implementor) { super(implementor); }
+    public void operation() { implementor.operationImpl(); }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Composite Pattern
+Problem: Compose objects into tree structures to represent part-whole hierarchies.
+Solution: Define a composite class that implements the component interface and contains child components.
+Java Code:
+Java
+
+interface Component {
+    void operation();
+}
+class Leaf implements Component {
+    public void operation() { System.out.println("Leaf operation"); }
+}
+class Composite implements Component {
+    private List<Component> children = new ArrayList<>();
+    public void add(Component component) { children.add(component); }
+    public void operation() {
+        for (Component child : children) {
+            child.operation();
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Decorator Pattern
+Problem: Add responsibilities to objects dynamically.
+Solution: Create a decorator class that wraps the original class and adds new behavior.
+Java Code:
+Java
+
+interface Component {
+    void operation();
+}
+class ConcreteComponent implements Component {
+    public void operation() { System.out.println("Concrete operation"); }
+}
+abstract class Decorator implements Component {
+    protected Component component;
+    public Decorator(Component component) { this.component = component; }
+    public void operation() { component.operation(); }
+}
+class ConcreteDecorator extends Decorator {
+    public ConcreteDecorator(Component component) { super(component); }
+    public void operation() {
+        super.operation();
+        System.out.println("Decorator operation");
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Facade Pattern
+Problem: Provide a simplified interface to a complex subsystem.
+Solution: Create a facade class that provides a simplified interface to the subsystem.
+Java Code:
+Java
+
+class SubsystemA {
+    public void operationA() { System.out.println("Subsystem A operation"); }
+}
+class SubsystemB {
+    public void operationB() { System.out.println("Subsystem B operation"); }
+}
+class Facade {
+    private SubsystemA subsystemA = new SubsystemA();
+    private SubsystemB subsystemB = new SubsystemB();
+    public void operation() {
+        subsystemA.operationA();
+        subsystemB.operationB();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Flyweight Pattern
+Problem: Minimize memory usage by sharing as much data as possible with similar objects.
+Solution: Use a flyweight factory to manage shared objects.
+Java Code:
+Java
+
+interface Flyweight {
+    void operation(String extrinsicState);
+}
+class ConcreteFlyweight implements Flyweight {
+    private String intrinsicState;
+    public ConcreteFlyweight(String intrinsicState) { this.intrinsicState = intrinsicState; }
+    public void operation(String extrinsicState) {
+        System.out.println("Intrinsic: " + intrinsicState + ", Extrinsic: " + extrinsicState);
+    }
+}
+class FlyweightFactory {
+    private Map<String, Flyweight> flyweights = new HashMap<>();
+    public Flyweight getFlyweight(String key) {
+        if (!flyweights.containsKey(key)) {
+            flyweights.put(key, new ConcreteFlyweight(key));
+        }
+        return flyweights.get(key);
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Proxy Pattern
+Problem: Provide a surrogate or placeholder for another object to control access to it.
+Solution: Create a proxy class that implements the same interface as the real object and controls access to it.
+Java Code:
+Java
+
+interface Subject {
+    void request();
+}
+class RealSubject implements Subject {
+    public void request() { System.out.println("Real request"); }
+}
+class Proxy implements Subject {
+    private RealSubject realSubject;
+    public void request() {
+        if (realSubject == null) {
+            realSubject = new RealSubject();
+        }
+        realSubject.request();
+    }
+}
+
+Behavioral Patterns
+Chain of Responsibility Pattern
+Problem: Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.
+Solution: Chain the receiving objects and pass the request along the chain until an object handles it.
+Java Code:
+Java
+
+abstract class Handler {
+    protected Handler successor;
+    public void setSuccessor(Handler successor) { this.successor = successor; }
+    public abstract void handleRequest(String request);
+}
+class ConcreteHandler1 extends Handler {
+    public void handleRequest(String request) {
+        if (request.equals("Request1")) {
+            System.out.println("Handler1 handled the request");
+        } else if (successor != null) {
+            successor.handleRequest(request);
+        }
+    }
+}
+class ConcreteHandler2 extends Handler {
+    public void handleRequest(String request) {
+        if (request.equals("Request2")) {
+            System.out.println("Handler2 handled the request");
+        } else if (successor != null) {
+            successor.handleRequest(request);
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Command Pattern
+Problem: Encapsulate a request as an object, thereby allowing for parameterization of clients with queues, requests, and operations.
+Solution: Create command objects that encapsulate actions and their parameters.
+Java Code:
+Java
+
+interface Command {
+    void execute();
+}
+class Light {
+    public void on() { System.out.println("Light is on"); }
+    public void off() { System.out.println("Light is off"); }
+}
+class LightOnCommand implements Command {
+    private Light light;
+    public LightOnCommand(Light light) { this.light = light; }
+    public void execute() { light.on(); }
+}
+class LightOffCommand implements Command {
+    private Light light;
+    public LightOffCommand(Light light) { this.light = light; }
+    public void execute() { light.off(); }
+}
+class RemoteControl {
+    private Command command;
+    public void setCommand(Command command) { this.command = command; }
+    public void pressButton() { command.execute(); }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Interpreter Pattern
+Problem: Define a representation for a language’s grammar along with an interpreter that uses the representation to interpret sentences in the language.
+Solution: Create an interpreter for the language’s grammar.
+Java Code:
+Java
+
+interface Expression {
+    boolean interpret(String context);
+}
+class TerminalExpression implements Expression {
+    private String data;
+    public TerminalExpression(String data) { this.data = data; }
+    public boolean interpret(String context) {
+        return context.contains(data);
+    }
+}
+class OrExpression implements Expression {
+    private Expression expr1;
+    private Expression expr2;
+    public OrExpression(Expression expr1, Expression expr2) {
+        this.expr1 = expr1;
+        this.expr2 = expr2;
+    }
+    public boolean interpret(String context) {
+        return expr1.interpret(context) || expr2.interpret(context);
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Iterator Pattern
+Problem: Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+Solution: Create an iterator class that encapsulates the iteration logic.
+Java Code:
+Java
+
+interface Iterator {
+    boolean hasNext();
+    Object next();
+}
+interface Aggregate {
+    Iterator createIterator();
+}
+class ConcreteAggregate implements Aggregate {
+    private String[] items;
+    public ConcreteAggregate(String[] items) { this.items = items; }
+    public Iterator createIterator() { return new ConcreteIterator(items); }
+}
+class ConcreteIterator implements Iterator {
+    private String[] items;
+    private int position = 0;
+    public ConcreteIterator(String[] items) { this.items = items; }
+    public boolean hasNext() { return position < items.length; }
+    public Object next() { return items[position++]; }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+
+Mediator Pattern
+Problem: Define an object that encapsulates how a set of objects interact.
+Solution: Create a mediator class that handles communication between different objects.
+Java Code:
+Java
+
+interface Mediator {
+    void sendMessage(String message, Colleague colleague);
+}
+abstract class Colleague {
+    protected Mediator mediator;
+    public Colleague(Mediator mediator) { this.mediator = mediator; }
+}
+class ConcreteColleague1 extends Colleague {
+    public ConcreteColleague1(Mediator mediator) { super(mediator); }
+    public void send(String message) { mediator.sendMessage(message, this); }
+    public void receive(String message) { System.out.println("Colleague1 received: " + message); }
+}
+class ConcreteColleague2 extends Colleague {
+    public ConcreteColleague2(Mediator mediator) { super(mediator); }
+    public void send(String message) { mediator.sendMessage(message, this); }
+    public void receive(String message) { System.out.println("Colleague2 received: " + message); }
+}
+class ConcreteMediator implements Mediator {
+    private ConcreteColleague1 colleague1;
+    private ConcreteColleague2 colleague2;
+    public void setColleague1(ConcreteColleague1 colleague1) { this.colleague1 = colleague1; }
+    public void setColleague2(ConcreteColleague2 colleague2) { this.colleague2 = colleague2; }
+    public void sendMessage(String message, Colleague colleague) {
+        if (colleague == colleague1) {
+            colleague2.receive(message);
+        } else {
+            colleague1.receive(message);
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Memento Pattern
+Problem: Capture and externalize an object’s internal state so that the object can be restored to this state later.
+Solution: Create a memento class that stores the state of the object.
+Java Code:
+Java
+
+class Memento {
+    private String state;
+    public Memento(String state) { this.state = state; }
+    public String getState() { return state; }
+}
+class Originator {
+    private String state;
+    public void setState(String state) { this.state = state; }
+    public String getState() { return state; }
+    public Memento saveStateToMemento() { return new Memento(state); }
+    public void getStateFromMemento(Memento memento) { state = memento.getState(); }
+}
+class Caretaker {
+    private List<Memento> mementoList = new ArrayList<>();
+    public void add(Memento state) { mementoList.add(state); }
+    public Memento get(int index) { return mementoList.get(index); }
+}
+

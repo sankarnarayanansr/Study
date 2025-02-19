@@ -1,0 +1,493 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "function greet(name: string , greeting?: string = 'Hello'): string {\r\n    return `${greeting || 'Hello'} ${name}!`\r\n}\r\n\r\nconsole.log(greet('John' )) // Hi John!"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Hello John!",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// # TypeScript Basics to Advanced Concepts\r\n\r\n// ## Table of Contents\r\n// 1. [Introduction to TypeScript](#introduction)\r\n// 2. [Basic Types](#basic-types)\r\n// 3. [Interfaces](#interfaces)\r\n// 4. [Classes](#classes)\r\n// 5. [Functions](#functions)\r\n// 6. [Generics](#generics)\r\n// 7. [Enums](#enums)\r\n// 8. [Type Inference](#type-inference)\r\n// 9. [Type Assertions](#type-assertions)\r\n// 10. [Advanced Types](#advanced-types)\r\n// 11. [Modules](#modules)\r\n// 12. [Decorators](#decorators)\r\n// 13. [Namespaces](#namespaces)\r\n// 14. [Mixins](#mixins)\r\n// 15. [Utility Types](#utility-types)\r\n// 16. [Conditional Types](#conditional-types)\r\n// 17. [Mapped Types](#mapped-types)\r\n// 18. [Template Literal Types](#template-literal-types)\r\n\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "Error",
+                                "message": "Failed to generate code object, \nBasics;\r\n ^\n\nUnexpected character ';'",
+                                "stack": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let isDone: boolean = false;\r\nlet age: number = 25;\r\nlet name: string = \"Alice\";\r\nlet list: number[] = [1, 2, 3];\r\nlet tuple: [string, number] = [\"hello\", 10];\r\nenum Color { Red, Green, Blue }\r\nlet c: Color = Color.Green;\r\nlet notSure: any = 4;\r\nnotSure = \"maybe a string instead\";\r\nlet simpleObject: { name: string; age: number } = {\r\n    name: \"John\",\r\n    age: 30\r\n};\r\nlet arrayOfObjects: { id: number; name: string }[] = [\r\n    { id: 1, name: \"Alice\" },\r\n    { id: 2, name: \"Bob\" },\r\n    { id: 3, name: \"Charlie\" }\r\n];\r\nlet complexObject: { [key: string]: { [key: string]: number | string | boolean | any[] } } = {\r\n    key1: {\r\n        subKey1: 1,\r\n        subKey2: \"value\",\r\n        subKey3: true,\r\n        subKey4: [1, 2, 3]\r\n    },\r\n    key2: {\r\n        subKey1: 2,\r\n        subKey2: \"another value\",\r\n        subKey3: false,\r\n        subKey4: [\"a\", \"b\", \"c\"]\r\n    }\r\n};\r\n// A type alias in TypeScript is used to create a new name for a type. It can be used to define the shape of an object, \r\n// but it can also be used for other types such as unions, intersections, and primitives.\r\ntype Primitive = number | string | boolean;\r\ntype NestedObject = { [key: string]: Primitive | Primitive[] | NestedObject };\r\n\r\nlet simplerObject: NestedObject = {\r\n    key1: {\r\n        subKey1: 1,\r\n        subKey2: \"value\",\r\n        subKey3: true,\r\n        subKey4: [1, 2, 3]\r\n    },\r\n    key2: {\r\n        subKey1: 2,\r\n        subKey2: \"another value\",\r\n        subKey3: false,\r\n        subKey4: [\"a\", \"b\", \"c\"]\r\n    }\r\n};"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'maybe a string instead'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "\r\n// An interface in TypeScript is used to define the structure of an object.\r\n//  It can be used to describe the shape of an object, including its properties and methods. Interfaces can be extended and implemented by classes.\r\ninterface Person {\r\n  firstName: string;\r\n  lastName: string;\r\n};\r\n\r\nfunction greet(person: Person) {\r\n  return `Hello, ${person.firstName} ${person.lastName}`;\r\n}\r\n\r\nlet user = { firstName: \"John\", lastName: \"Doe\" };\r\nconsole.log(greet(user));\r\n\r\n// major diff type and interface is \r\n// type can do union , intersection and primitive types interface cant \r\n// interface is used to define the structure of an object like java\r\n// both interface and type supports declaration merging"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Hello, John Doe",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "class Animal {\r\n    name: string;\r\n  \r\n    constructor(name: string) {\r\n      this.name = name;\r\n    }\r\n  \r\n    move(distance: number = 0) {\r\n      console.log(`${this.name} moved ${distance}m.`);\r\n    }\r\n  }\r\n  \r\n  class Dog extends Animal {\r\n    bark() {\r\n      console.log(\"Woof! Woof!\");\r\n    }\r\n  }\r\n  \r\n  const dog = new Dog(\"Rex\");\r\n  dog.bark();\r\n  dog.move(10);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Woof! Woof!",
+                                "Rex moved 10m.",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function add(x: number, y: number): number {\r\n    return x + y;\r\n  }\r\n  \r\n  let myAdd: (x: number, y: number) => number = function (x, y) {\r\n    return x + y;\r\n  };"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// generice similar \r\nfunction identity<T>(arg: T): T {\r\n    return arg;\r\n  \r\n  }\r\nfunction identity<T, U>(arg: T , arg1:U): T | U {\r\n  return arg || arg1;\r\n}\r\n  let output1 = identity<string>(\"myString\");\r\n  let output2 = identity<number>(100);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "enum Direction {\r\n    Up = 1,\r\n    Down,\r\n    Left,\r\n    Right\r\n  }\r\n  \r\n  let dir: Direction = Direction.Up;\r\n  console.log(Direction.Down);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let x = 3; // TypeScript infers x as number"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let someValue: any = \"this is a string\";\r\nlet strLength: number = (someValue as string).length;"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "interface Person {\r\n    name: string;\r\n  }\r\n  \r\n  interface Employee {\r\n    employeeId: number;\r\n  }\r\n  \r\n  type EmployeePerson = Person & Employee;\r\n  \r\n  const employee: EmployeePerson = {\r\n    name: \"Alice\",\r\n    employeeId: 123,\r\n  };"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "type ID = number | string;\r\n\r\nconst userId: ID = 123;\r\nconst orderId: ID = \"abc123\";"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function isString(value: any): value is string {\r\n    return typeof value === \"string\";\r\n  }\r\n  \r\n  function printId(id: ID) {\r\n    if (isString(id)) {\r\n      console.log(`ID is a string: ${id.toUpperCase()}`);\r\n    } else {\r\n      console.log(`ID is a number: ${id.toFixed(2)}`);\r\n    }\r\n  }"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "export interface Person {\r\n    firstName: string;\r\n    lastName: string;\r\n  }\r\n  \r\n  export function greet(person: Person) {\r\n    return `Hello, ${person.firstName} ${person.lastName}`;\r\n  }"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "ReferenceError",
+                                "message": "exports is not defined",
+                                "stack": "    at <Cell 14> [4, 1]\n    at <Cell 14> [9, 46]\n    at Script.runInContext (node:vm:149:12)\n    at Script.runInNewContext (node:vm:154:17)\n    at Object.runInNewContext (node:vm:310:38)\n    at C (c:\\Users\\sankarn\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:113345)\n    at t.execCode (c:\\Users\\sankarn\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:114312)\n    at k.<anonymous> (c:\\Users\\sankarn\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:142156)\n    at k.emit (node:events:513:28)\n    at k.emit (node:domain:489:12)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { Person, greet } from './module';\r\n\r\nlet user: Person = { firstName: \"John\", lastName: \"Doe\" };\r\nconsole.log(greet(user));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "Error",
+                                "message": "Cannot find module './module'\nRequire stack:\n- <repl>",
+                                "stack": "node:internal/modules/cjs/loader:1244\n  throw err;\n  ^\n\n    at Function.<anonymous> (node:internal/modules/cjs/loader:1241:15)\n    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue [as _resolveFilename] (c:\\Users\\sankarn\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\resources\\scripts\\node_modules\\@cspotcode\\source-map-support\\source-map-support.js:679:30)\n    at Function.<anonymous> (node:internal/modules/cjs/loader:1066:27)\n    at Function._._load (c:\\Users\\sankarn\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:115372)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)\n    at Module.require (node:internal/modules/cjs/loader:1327:12)\n    at require (node:internal/modules/helpers:136:16)\n    at <Cell 15> [1, 46]\n    at Script.runInContext (node:vm:149:12)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// function Log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {\r\n//     const originalMethod = descriptor.value;\r\n  \r\n//     descriptor.value = function (...args: any[]) {\r\n//       console.log(`Calling ${propertyKey} with arguments: ${JSON.stringify(args)}`);\r\n//       return originalMethod.apply(this, args);\r\n//     };\r\n  \r\n//     return descriptor;\r\n//   }\r\n  \r\n//   class Calculator {\r\n//     @Log\r\n//     add(a: number, b: number): number {\r\n//       return a + b;\r\n//     }\r\n//   }\r\n  \r\n//   const calculator = new Calculator();\r\n//   calculator.add(2, 3);\r\n\r\n\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "namespace Utility {\r\n    export function log(message: string) {\r\n      console.log(message);\r\n    }\r\n  \r\n    export function error(message: string) {\r\n      console.error(message);\r\n    }\r\n  }\r\n  \r\n  Utility.log(\"This is a log message.\");\r\n  Utility.error(\"This is an error message.\");"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stderr",
+                            "value": [
+                                "This is an error message.",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "This is a log message.",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// multiple inheritance usage\r\n// they are calling it as mixins because they are taking the [base classes]\r\n// getting properties from both the base classes and applying it to the derived class\r\n// using the protoype\r\n// baseCtors.forEach(baseCtor => {\r\n//   Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {\r\n//     derivedCtor.prototype[name] = baseCtor.prototype[name];\r\n//   });\r\n// });\r\nclass Disposable {\r\n\r\n    isDisposed: boolean = false;\r\n    dispose() {\r\n      this.isDisposed = true;\r\n      console.log(\"Disposed\");\r\n    }\r\n  }\r\n  \r\n  class Activatable {\r\n    isActive: boolean = false;\r\n    activate() {\r\n      this.isActive = true;\r\n      console.log(\"Activated\");\r\n    }\r\n    deactivate() {\r\n      this.isActive = false;\r\n      console.log(\"Deactivated\");\r\n    }\r\n  }\r\n  \r\n  class SmartObject implements Disposable, Activatable {\r\n    isDisposed: boolean = false;\r\n    dispose: () => void;\r\n    isActive: boolean = false;\r\n    activate: () => void;\r\n    deactivate: () => void;\r\n  \r\n    constructor() {\r\n      setInterval(() => console.log(this.isActive + \" : \" + this.isDisposed), 500);\r\n    }\r\n  }\r\n  \r\n  applyMixins(SmartObject, [Disposable, Activatable]);\r\n  \r\n  function applyMixins(derivedCtor: any, baseCtors: any[]) {\r\n    baseCtors.forEach(baseCtor => {\r\n      Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {\r\n        derivedCtor.prototype[name] = baseCtor.prototype[name];\r\n      });\r\n    });\r\n  }\r\n  \r\n  const smartObj = new SmartObject();\r\n  setTimeout(() => smartObj.activate(), 1000);\r\n  setTimeout(() => smartObj.dispose(), 2000);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stderr",
+                            "value": [
+                                "",
+                                "TypeError: smartObj.activate is not a function",
+                                "    at Timeout._onTimeout (<Cell 18> [44, 2])",
+                                "    at listOnTimeout (node:internal/timers:614:17)",
+                                "    at processTimers (node:internal/timers:549:7)",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "Timeout {",
+                                "  _idleTimeout: \u001b[33m2000\u001b[39m,",
+                                "  _idlePrev: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleNext: \u001b[36m[TimersList]\u001b[39m,",
+                                "  _idleStart: \u001b[33m119037\u001b[39m,",
+                                "  _onTimeout: \u001b[36m[Function (anonymous)]\u001b[39m,",
+                                "  _timerArgs: \u001b[90mundefined\u001b[39m,",
+                                "  _repeat: \u001b[1mnull\u001b[22m,",
+                                "  _destroyed: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(refed)\u001b[39m]: \u001b[33mtrue\u001b[39m,",
+                                "  [\u001b[32mSymbol(kHasPrimitive)\u001b[39m]: \u001b[33mfalse\u001b[39m,",
+                                "  [\u001b[32mSymbol(asyncId)\u001b[39m]: \u001b[33m349\u001b[39m,",
+                                "  [\u001b[32mSymbol(triggerId)\u001b[39m]: \u001b[33m9\u001b[39m,",
+                                "  [\u001b[32mSymbol(kAsyncContextFrame)\u001b[39m]: \u001b[90mundefined\u001b[39m",
+                                "}"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false : false",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stderr",
+                            "value": [
+                                "C:\\Users\\sankarn\\AppData\\Local\\Temp\\vscode-notebook-706JYY\\notebook_cell_X23sZmlsZQ==.js:40",
+                                "setTimeout(() => smartObj.activate(), 1000);",
+                                "                          ^",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "\r\n//partial to make optional types\r\ninterface User {\r\n    id: number;\r\n    name: string;\r\n    email: string;\r\n  }\r\n  \r\n  type PartialUser = Partial<User>;\r\n  \r\n  const user: PartialUser = { id: 1, name: \"Alice\" };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// readonly will make the immutable object\r\ntype ReadonlyUser = Readonly<User>;\r\n\r\nconst user: ReadonlyUser = { id: 1, name: \"Alice\", email: \"alice@example.com\" };\r\n// user.id = 2; // Error: Cannot assign to 'id' because it is a read-only property."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// pick you can select few which you need\r\ntype UserPreview = Pick<User, \"id\" | \"name\">;\r\n\r\nconst userPreview: UserPreview = { id: 1, name: \"Alice\" };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "//omit is used to remove the properties\r\ntype UserWithoutEmail = Omit<User, \"email\">;\r\n\r\nconst userWithoutEmail: UserWithoutEmail = { id: 1, name: \"Alice\" };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "type IsString<T> = T extends string ? \"yes\" : \"no\";\r\n\r\ntype A = IsString<string>; // \"yes\"\r\ntype B = IsString<number>; // \"no\""
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "type User = {\r\n    id: number;\r\n    name: string;\r\n    email: string;\r\n  };\r\n  // making all the properties optional similar to partial\r\n  type OptionalUser = {\r\n    [P in keyof User]?: User[P];\r\n  };\r\n  \r\n  const user: OptionalUser = { id: 1 };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "type Color = \"red\" | \"green\" | \"blue\";\r\ntype BrightColor = `bright-${Color}`;\r\n\r\nconst color: BrightColor = \"bright-red\";"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}

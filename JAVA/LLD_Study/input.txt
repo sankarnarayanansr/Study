@@ -1,0 +1,11 @@
+park hhhhhhhhh yellow
+park kafhhhhhh red
+park ndoshhhhhh yellow
+park djshhhhh white
+status
+filter yellow
+leave ndoshhhhhh yellow
+leave djshhhhh white
+park djshhh white
+status
+

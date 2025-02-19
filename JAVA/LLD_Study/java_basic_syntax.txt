@@ -1,0 +1,99 @@
+
+Java Syntax for Data Structures and Algorithms (DSA)
+Arrays
+Declaration and Initialization
+int[] arr = {1, 2, 3, 4, 5};
+String[] names = {"Alice", "Bob", "Charlie"};
+
+Accessing Elements
+int firstElement = arr[0];
+String name = names[2];
+
+
+Iterating Over Arrays
+for (int i = 0; i < arr.length; i++) {
+    System.out.println(arr[i]);
+}
+
+for (String name : names) {
+    System.out.println(name);
+}
+
+
+
+Lists
+ArrayList
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);
+list.add(20);
+System.out.println(list.get(1)); // Accessing elements
+
+Maps
+HashMap
+HashMap<String, Integer> map = new HashMap<>();
+map.put("Alice", 30);
+map.put("Bob", 25);
+System.out.println(map.get("Alice")); // Accessing elements
+
+Sets
+HashSet
+HashSet<Integer> set = new HashSet<>();
+set.add(1);
+set.add(2);
+set.add(1); // Duplicate, not added
+System.out.println(set.contains(1)); // Checking for existence
+
+
+Sorting
+Arrays.sort() and Collections.sort()
+int[] numbers = {4, 2, 5, 1, 3};
+Arrays.sort(numbers);
+
+ArrayList<String> namesList = new ArrayList<>(Arrays.asList("Alice", "Charlie", "Bob"));
+Collections.sort(namesList);
+
+
+Searching
+Binary Search
+int index = Arrays.binarySearch(numbers, 3); // Assuming numbers is already sorted
+
+Algorithms
+Example: Fibonacci Series
+public int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+
+Example: Factorial
+public int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return n * factorial(n-1);
+}
+
+This overview focuses on the Java syntax relevant to data structures and algorithms, including arrays, lists, maps, sets, sorting, searching, and examples of algorithm implementations.
+
+
+
+
+11. Working with 2D Arrays
+2D arrays are arrays of arrays, often used to represent matrices or grids.
+int[][] matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+// Accessing elements
+int element = matrix[1][2]; // Accesses 6
+
+
+12. Converting Collections
+Converting between different types of collections, like ArrayList to List.
+ArrayList<String> arrayList = new ArrayList<>(Arrays.asList("a", "b", "c"));
+// Convert ArrayList to List
+List<String> list = new ArrayList<>(arrayList);
+// Convert List to ArrayList
+ArrayList<String> arrayListFromList = new ArrayList<>(list);

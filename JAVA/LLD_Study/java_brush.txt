@@ -1,0 +1,152 @@
+1. Interfaces
+Interfaces define a contract for what a class can do, without dictating how it should do it.
+interface Animal {
+    void eat();
+}
+
+class Dog implements Animal {
+    public void eat() {
+        System.out.println("Dog is eating");
+    }
+}
+
+2. Abstract Classes and Methods
+Abstract classes cannot be instantiated and are used to provide a base for subclasses.
+abstract class Shape {
+    abstract void draw();
+}
+
+class Circle extends Shape {
+    void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+
+3. Nested Classes
+Java supports nested classes, which can be static, inner, local, or anonymous.
+class OuterClass {
+    static class StaticNestedClass {
+    }
+    
+    class InnerClass {
+    }
+}
+
+
+
+4. Generics
+Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces, and methods.
+class Box<T> {
+    private T t;
+
+    public void set(T t) { this.t = t; }
+    public T get() { return t; }
+}
+
+
+
+5. Annotations
+Annotations provide data about a program but are not part of the program itself.
+@Override
+public String toString() {
+    return "Example toString()";
+}
+
+@Deprecated
+public void oldMethod() {
+    // Deprecated method
+}
+
+
+6. Reflection
+Reflection allows inspection of classes, interfaces, fields, and methods at runtime.
+
+Class<?> obj = Class.forName("java.lang.String");
+System.out.println("Class name: " + obj.getName());
+
+
+
+
+7. Design Patterns
+Design patterns are solutions to common problems in software design.
+// Singleton pattern
+class Singleton {
+    private static Singleton instance;
+    
+    private Singleton() {}
+    
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+
+
+
+
+
+8. Concurrency
+Java provides mechanisms for concurrent programming.
+class ThreadExample extends Thread {
+    public void run() {
+        System.out.println("Thread is running");
+    }
+}
+
+
+
+9. Functional Programming
+Java supports functional programming concepts like lambda expressions and streams.
+List<String> list = Arrays.asList("a", "b", "c");
+list.forEach(element -> System.out.println(element.toUpperCase()));
+
+
+
+10. Memory Management
+Understanding how Java manages memory, including garbage collection.
+// Memory management is handled by the JVM. Example usage:
+Runtime runtime = Runtime.getRuntime();
+long memory = runtime.totalMemory() - runtime.freeMemory();
+System.out.println("Used memory: " + memory);
+
+
+
+
+11. Exception Handling
+Java provides a robust framework for handling runtime errors.
+try {
+    // Risky code
+} catch (Exception e) {
+    // Handle exception
+} finally {
+    // Cleanup code
+}
+
+
+
+
+12. Proxy Pattern and Dynamic Proxies
+The proxy pattern is used to define a representative or placeholder for another object.
+interface Animal {
+    void makeSound();
+}
+
+class AnimalProxy implements Animal {
+    private Animal realAnimal;
+
+    public AnimalProxy(Animal realAnimal) {
+        this.realAnimal = realAnimal;
+    }
+
+    public void makeSound() {
+        // Proxy can add additional logic
+        realAnimal.makeSound();
+    }
+}
+
+
+These examples illustrate the core concepts of advanced OOP in Java, demonstrating how they can be applied in real-world programming scenarios.
+
